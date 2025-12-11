@@ -53,10 +53,16 @@ class DataLoader:
         
         # Generate target variable (power output in kW)
         # Power is highly correlated with irradiance, with some temperature effect
+        IRRADIANCE_FACTOR = 0.15  # kW per W/m² (typical solar panel efficiency)
+        TEMP_FACTOR = 2  # kW adjustment per degree from optimal temperature
+        OPTIMAL_TEMP = 25  # °C - optimal solar panel temperature
+        TEMP_RANGE = 30  # Maximum temperature effect range
+        NOISE_STD = 10  # Standard deviation of measurement noise
+        
         power_output = (
-            irradiance * 0.15 +  # Main factor: irradiance
-            (30 - np.abs(temperature - 25)) * 2 +  # Optimal temperature around 25°C
-            np.random.normal(0, 10, n_samples)  # Random noise
+            irradiance * IRRADIANCE_FACTOR +  # Main factor: irradiance
+            (TEMP_RANGE - np.abs(temperature - OPTIMAL_TEMP)) * TEMP_FACTOR +  # Temperature effect
+            np.random.normal(0, NOISE_STD, n_samples)  # Random noise
         )
         power_output = np.maximum(0, power_output)  # Ensure non-negative
         

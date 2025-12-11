@@ -22,14 +22,14 @@ class SolarPowerModel:
         """
         # Default XGBoost parameters optimized for regression
         default_params = {
-            'objective': 'reg:squarederror',
-            'max_depth': 6,
-            'learning_rate': 0.1,
-            'n_estimators': 100,
-            'min_child_weight': 1,
-            'subsample': 0.8,
-            'colsample_bytree': 0.8,
-            'random_state': 42
+            'objective': 'reg:squarederror',  # Regression task
+            'max_depth': 6,  # Maximum tree depth (balanced complexity)
+            'learning_rate': 0.1,  # Step size shrinkage (conservative)
+            'n_estimators': 100,  # Number of boosting rounds
+            'min_child_weight': 1,  # Minimum sum of instance weight
+            'subsample': 0.8,  # Fraction of samples for training
+            'colsample_bytree': 0.8,  # Fraction of features for training
+            'random_state': 42  # Reproducibility seed
         }
         
         # Update with user-provided parameters
